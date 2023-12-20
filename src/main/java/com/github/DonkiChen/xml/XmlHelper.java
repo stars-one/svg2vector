@@ -7,6 +7,10 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.QName;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
+
+import java.io.StringWriter;
 
 public class XmlHelper {
 
@@ -42,6 +46,24 @@ public class XmlHelper {
     }
 
     public String getDocumentString() {
-        return mXmlDocument.asXML();
+        OutputFormat format = OutputFormat.createPrettyPrint();
+        format.setIndent(true);
+        format.setIndentSize(2);
+
+        StringWriter writer = new StringWriter();
+        XMLWriter xmlWriter = new XMLWriter(writer, format);
+
+        try {
+
+            xmlWriter.write(mXmlDocument);
+            xmlWriter.flush();
+            xmlWriter.close();
+            // 输出美化后的 XML 字符串
+            String formattedXml = writer.toString();
+            return formattedXml;
+        } catch (Exception e) {
+
+        }
+        return "";
     }
 }
