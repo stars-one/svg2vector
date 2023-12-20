@@ -1,15 +1,19 @@
 # svg2vector
 
-_批量转换svg文件为Android可用的xml_
+基于[DonkiChen/svg2vector: 批量转换svg文件为Android可用的xml](https://github.com/DonkiChen/svg2vector)项目改造的代码
 
----
-## Feature
+提供一个依赖可以实现批量转换svg文件为Android可用的xml
 
-- [x] 将图形都转换成Path(rect,circle,line,path,ellipse,polyline,polygon)
-- [x] Android支持的属性(width,height,viewportWidth,viewportHeight,fillAlpha,fillColor,fillType,pathData,strokeWidth,strokeColor)
-- [x] 无Transform的svg已可用
+## 使用
 
-## TODO
-- [ ] 支持所有Transform(matrix,translate,rotate,scale,skew,skewx,skewy,transform)
-    - [ ] 用Group实现
-    - [ ] 直接修改坐标实现
+### 1.添加依赖
+### 2.使用
+
+```kotlin
+val file = File("E:\\download\\新建文件夹\\arrow-right-circle-fill.svg")
+
+val outputFile = File(file.parentFile,file.nameWithoutExtension.replace("-","_")+".xml")
+
+SvgUtils.toXmlFile(file,outputFile)
+println("输出xml文件为 $outputFile")
+```
