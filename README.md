@@ -4,9 +4,50 @@
 
 可以批量将svg文件转为Android里的xml图标文件
 
-## 使用
+<img src="https://jitpack.io/v/Stars-One/common-controls.svg" />
 
-### 1.添加依赖
+## 引入依赖
+
+### Maven引入
+
+**1. 添加仓库**
+
+由于jar包是上传在jitpack仓库中,所以得在项目的pom.xml添加仓库
+```
+<repositories>
+	<repository>
+		<id>jitpack.io</id>
+		<url>https://jitpack.io</url>
+	</repository>
+</repositories>
+```
+
+**2.添加依赖**
+```
+<dependency>
+	    <groupId>com.github.stars-one</groupId>
+	    <artifactId>svg2vector</artifactId>
+	    <version>1.1</version>
+	</dependency>
+```
+
+### Gradle引入
+
+```
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	}
+}
+```
+
+```
+dependencies {
+    implementation 'com.github.stars-one:svg2vector:1.1'
+}
+```
+
 ### 2.使用
 
 ```kotlin
