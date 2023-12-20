@@ -33,45 +33,20 @@ public class SvgParser {
 
     }
 
-    public void searchAllFiles(File dir) {
-        File[] files = dir.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File file) {
-                return !file.isHidden() && (file.isDirectory() || file.getName().endsWith(".svg"));
-            }
-        });
-        if (files != null) {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    searchAllFiles(file);
-                } else if (file.getName().endsWith(".svg")) {
-                    parseSvg(file);
-                }
-            }
-        }
-    }
-
-    private void parseSvg(File file) {
+    public String parseSvg(File file,int size) {
         SAXReader reader = new SAXReader();
         try {
             Document document = reader.read(file);
             mRootElement = document.getRootElement();
-/*
-            String width = SvgHelper.getAttributeText(root, SVG_ATTRIBUTE_WIDTH, "24dp");
-            width = width.replace("px", "dp");
-            if (!width.endsWith("dp")) {
-                width = width.concat("dp");
+
+            int trueSize = 24;
+            if (size > 0) {
+                trueSize = size;
             }
-           */
-            mXmlHelper.addRootAttribute(AndroidQName.WIDTH, "24dp");
-/*
-            String height = SvgHelper.getAttributeText(root, SVG_ATTRIBUTE_HEIGHT, "24dp");
-            height = height.replace("px", "dp");
-            if (!height.endsWith("dp")) {
-                height = height.concat("dp");
-            }
-            */
-            mXmlHelper.addRootAttribute(AndroidQName.HEIGHT, "24dp");
+
+            mXmlHelper.addRootAttribute(AndroidQName.WIDTH, trueSize+"dp");
+            mXmlHelper.addRootAttribute(AndroidQName.HEIGHT, trueSize+"dp");
+
             String viewBox = SvgHelper.getAttributeText(mRootElement, SVG_ATTRIBUTE_VIEW_BOX, "");
             if (!viewBox.isEmpty()) {
                 String[] box = viewBox.split("\\s+");
@@ -82,9 +57,11 @@ public class SvgParser {
             }
             searchShapeNode(mRootElement, null);
             System.out.println(mXmlHelper.getDocumentString());
+            return mXmlHelper.getDocumentString();
         } catch (DocumentException e) {
             e.printStackTrace();
         }
+        return "";
     }
 
     /**
