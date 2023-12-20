@@ -55,7 +55,7 @@ public class SvgParser {
                 }
             }
             searchShapeNode(mRootElement, null);
-            System.out.println(mXmlHelper.getDocumentString());
+            //System.out.println(mXmlHelper.getDocumentString());
             return mXmlHelper.getDocumentString();
         } catch (DocumentException e) {
             e.printStackTrace();
@@ -84,10 +84,10 @@ public class SvgParser {
                 }
                 XmlPathNode node = ShapeDispatcher.dispatch(element, state.attributes);
                 if (node != null) {
-                    for (double[] doubles : state.attributes.matrixHelper.getMatrix().getArray()) {
-                        System.out.println(Arrays.toString(doubles));
-                    }
-                    System.out.println();
+                    //for (double[] doubles : state.attributes.matrixHelper.getMatrix().getArray()) {
+                    //    System.out.println(Arrays.toString(doubles));
+                    //}
+                    //System.out.println();
                     mXmlHelper.addPath(node);
                 }
             }
