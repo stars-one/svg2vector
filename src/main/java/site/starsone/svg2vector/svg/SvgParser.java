@@ -6,7 +6,6 @@ import site.starsone.svg2vector.svg.shape.ShapeDispatcher;
 import site.starsone.svg2vector.xml.XmlHelper;
 import site.starsone.svg2vector.xml.XmlPathNode;
 import site.starsone.svg2vector.xml.constant.AndroidQName;
-import com.sun.istack.internal.Nullable;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
@@ -15,7 +14,6 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.Iterator;
 
 public class SvgParser {
@@ -66,7 +64,7 @@ public class SvgParser {
     /**
      * 递归搜索支持的图形节点
      */
-    private void searchShapeNode(Element parent, @Nullable PathNodeSearchState state) {
+    private void searchShapeNode(Element parent, PathNodeSearchState state) {
         for (Iterator<Element> iterator = parent.elementIterator(); iterator.hasNext(); ) {
             Element element = iterator.next();
             if (parent == mRootElement) {
