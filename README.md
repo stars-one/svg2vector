@@ -4,7 +4,7 @@
 
 可以批量将svg文件转为Android里的xml图标文件
 
-<img src="https://jitpack.io/v/Stars-One/common-controls.svg" />
+<img src="https://jitpack.io/v/Stars-One/svg2vector.svg" />
 
 ## 引入依赖
 
