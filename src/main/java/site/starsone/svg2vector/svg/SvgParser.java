@@ -13,7 +13,9 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.StringReader;
 import java.util.Iterator;
 
 public class SvgParser {
@@ -30,35 +32,50 @@ public class SvgParser {
 
     }
 
-    public String parseSvg(File file,int size) {
-        SAXReader reader = new SAXReader();
+    public String parseSvg(StringReader br, int size) {
         try {
-            Document document = reader.read(file);
-            mRootElement = document.getRootElement();
-
-            int trueSize = 24;
-            if (size > 0) {
-                trueSize = size;
-            }
-
-            mXmlHelper.addRootAttribute(AndroidQName.WIDTH, trueSize+"dp");
-            mXmlHelper.addRootAttribute(AndroidQName.HEIGHT, trueSize+"dp");
-
-            String viewBox = SvgHelper.getAttributeText(mRootElement, SVG_ATTRIBUTE_VIEW_BOX, "");
-            if (!viewBox.isEmpty()) {
-                String[] box = viewBox.split("\\s+");
-                if (box.length == 4) {
-                    mXmlHelper.addRootAttribute(AndroidQName.VIEWPORT_WIDTH, box[2]);
-                    mXmlHelper.addRootAttribute(AndroidQName.VIEWPORT_HEIGHT, box[3]);
-                }
-            }
-            searchShapeNode(mRootElement, null);
-            //System.out.println(mXmlHelper.getDocumentString());
-            return mXmlHelper.getDocumentString();
-        } catch (DocumentException e) {
+            SAXReader reader = new SAXReader();
+            Document document = reader.read(br);
+            return parseSvg(document, size);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public String parseSvg(File file, int size) {
+        try {
+            SAXReader reader = new SAXReader();
+            Document document = reader.read(file);
+            return parseSvg(document, size);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    private String parseSvg(Document document, int size) {
+        mRootElement = document.getRootElement();
+
+        int trueSize = 24;
+        if (size > 0) {
+            trueSize = size;
+        }
+
+        mXmlHelper.addRootAttribute(AndroidQName.WIDTH, trueSize + "dp");
+        mXmlHelper.addRootAttribute(AndroidQName.HEIGHT, trueSize + "dp");
+
+        String viewBox = SvgHelper.getAttributeText(mRootElement, SVG_ATTRIBUTE_VIEW_BOX, "");
+        if (!viewBox.isEmpty()) {
+            String[] box = viewBox.split("\\s+");
+            if (box.length == 4) {
+                mXmlHelper.addRootAttribute(AndroidQName.VIEWPORT_WIDTH, box[2]);
+                mXmlHelper.addRootAttribute(AndroidQName.VIEWPORT_HEIGHT, box[3]);
+            }
+        }
+        searchShapeNode(mRootElement, null);
+        //System.out.println(mXmlHelper.getDocumentString());
+        return mXmlHelper.getDocumentString();
     }
 
     /**
